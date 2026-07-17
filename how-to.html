@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>How-To Guides — SecureOS Netboot Portal</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- Header gets injected here by common.js -->
+<div id="headerPlaceholder"></div>
+
+<!-- GUIDES HERO -->
+<section class="guides-hero">
+  <h1>How-To <span>Guides</span></h1>
+  <p>Step-by-step walkthroughs for setting up and running your Netboot server — pick a module below to get started.</p>
+</section>
+
+<!-- MODULES -->
+<div class="modules-wrap">
+  <div class="modules-grid">
+
+    <a class="module-card" href="#" target="_blank" rel="noopener" data-module="install-secureos">
+      <span class="module-num">MODULE 01</span>
+      <div class="module-icon"><i class="uil uil-download-alt">⬇</i></div>
+      <h3>How to Install SecureOS</h3>
+      <p>A complete walkthrough of downloading, flashing, and booting SecureOS on your server hardware from scratch.</p>
+      <span class="module-open">Open Guide <span class="arrow">→</span></span>
+    </a>
+
+    <a class="module-card" href="#" target="_blank" rel="noopener" data-module="access-dashboard">
+      <span class="module-num">MODULE 02</span>
+      <div class="module-icon">🖥️</div>
+      <h3>How to Access Dashboard</h3>
+      <p>Learn how to log in to the operator dashboard, find your center details, and navigate the admin tools.</p>
+      <span class="module-open">Open Guide <span class="arrow">→</span></span>
+    </a>
+
+    <a class="module-card" href="#" target="_blank" rel="noopener" data-module="configure-netboot">
+      <span class="module-num">MODULE 03</span>
+      <div class="module-icon">🛰️</div>
+      <h3>How to Configure Netboot Server</h3>
+      <p>Set up your Netboot asset, map it to a server slot, and register your tech contact for OTP login.</p>
+      <span class="module-open">Open Guide <span class="arrow">→</span></span>
+    </a>
+
+  </div>
+</div>
+
+<!-- Footer gets injected here by common.js -->
+<div id="footerPlaceholder"></div>
+
+<!-- common.js injects header + footer; must load after the placeholder divs above -->
+<script src="common.js"></script>
+<script>
+  // Each card currently points to "#" — swap these hrefs once you send
+  // over the real guide page names/URLs. 
+  const guidePages = {
+    "install-secureos": "How-to-Install-Netboot-Server.html",
+    "access-dashboard": "How-to-acess-netboot-dashbaord.html",
+    "configure-netboot": "configuring-netboot-for-node-registration.html"
+  };
+  document.querySelectorAll('.module-card').forEach(function(card){
+    const key = card.dataset.module;
+    if (guidePages[key]) card.setAttribute('href', guidePages[key]);
+  });
+</script>
+</body>
+</html>

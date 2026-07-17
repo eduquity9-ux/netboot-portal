@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Netboot Operator Mapping Portal</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- Header gets injected here by common.js -->
+<div id="headerPlaceholder"></div>
+
+<!-- HERO -->
+<section class="hero">
+  <h1>Netboot <span>Mapping</span> Portal</h1>
+  <div style="max-width:100%;margin:auto;line-height:1.7;background:#eaf4ff;border:1px solid #cfe3ff;padding:16px 20px;border-radius:14px;">
+    <p>Register Your Center to receive Netboot server login OTP. Ensure your details are accurate to avoid any interruptions during login authentication. Per server you can use only one mobile number.</p>
+  </div>
+</section>
+
+<!-- FORM -->
+<div class="wrapper">
+  <div class="card">
+    <div class="form-title">
+      <div class="form-icon">📝</div>
+      <div>
+        <h3>Operator Details</h3>
+        <p>Fields marked with * are mandatory</p>
+      </div>
+    </div>
+    <div class="grid">
+      <div class="field full">
+        <label>Exam Name <span class="req">*</span></label>
+        <select id="examName" onchange="onExamChange()"><option value="">— Loading exams... —</option></select>
+        <span class="error-msg" id="err_exam"></span>
+      </div>
+      <div class="field">
+        <label>City <span class="req">*</span></label>
+        <select id="city" disabled onchange="onCityChange()"><option value="">— Select exam first —</option></select>
+        <span class="error-msg" id="err_city"></span>
+      </div>
+      <div class="field">
+        <label>Center Code</label>
+        <input type="text" id="centerCode" readonly placeholder="Auto-filled"/>
+      </div>
+      <div class="field full">
+        <label>Center Name <span class="req">*</span></label>
+        <select id="centerName" disabled onchange="onCenterChange()"><option value="">— Select city first —</option></select>
+        <span class="error-msg" id="err_center"></span>
+      </div>
+      <div class="field">
+        <label>Server <span class="req">*</span></label>
+       <select id="server" onchange="updateCenterCode()"><option value="">— Select Server —</option></select>
+        <span class="error-msg" id="err_server"></span>
+      </div>
+      <div class="field">
+        <label>Netboot Asset Number (Hostname) <span class="req">*</span></label>
+        <input type="text" id="netbootHostname" placeholder="Enter Asset Number" oninput="this.value=this.value.toUpperCase()"/>
+        <span class="error-msg" id="err_netboot"></span>
+      </div>
+      <div class="field">
+        <label>Tech Person Name <span class="req">*</span></label>
+        <input type="text" id="tcName" placeholder="Enter Full Name" oninput="this.value=this.value.toUpperCase()"/>
+        <span class="error-msg" id="err_tc"></span>
+      </div>
+      <div class="field">
+        <label>Mobile Number <span class="req">*</span></label>
+        <input type="tel" id="mobile" maxlength="10" placeholder="10-digit mobile number" oninput="this.value=this.value.replace(/\D/g,'').slice(0,10)"/>
+        <span class="error-msg" id="err_mobile"></span>
+      </div>
+    </div>
+    <div class="submit-row">
+      <button id="submitBtn" onclick="handleSubmit()">
+        Submit Entry →
+        <span class="spinner" id="spin"></span>
+      </button>
+    </div>
+    <div class="note">⚠️ <strong>Note:</strong> Each Netboot server permits only one registered mobile number. Multiple operators cannot use the same server mapping.</div>
+  </div>
+</div>
+
+<!-- SHEET PANEL -->
+<div id="sheetPanel">
+  <div class="panelHeader">
+    <h3>Registered Centers</h3>
+    <div style="display:flex;gap:10px;align-items:center;">
+      <span style="font-size:11px;color:rgba(255,255,255,.8);">Mark:</span>
+      <div id="dotGreen"  class="color-dot" style="background:#22c55e;" onclick="setColor('green')"  title="Green"></div>
+      <div id="dotYellow" class="color-dot" style="background:#eab308;" onclick="setColor('yellow')" title="Yellow"></div>
+      <div id="dotRed"    class="color-dot" style="background:#ef4444;" onclick="setColor('red')"    title="Red"></div>
+      <button onclick="downloadExcel()" style="background:rgba(255,255,255,.2);border:none;color:#fff;padding:6px 14px;border-radius:999px;font-weight:700;cursor:pointer;font-size:12px;">⬇ Download</button>
+      <button onclick="closeSheet3Panel()">✕</button>
+    </div>
+  </div>
+  <div id="sheet3TableContainer">Loading...</div>
+</div>
+
+<!-- SUCCESS OVERLAY -->
+<div id="overlay">
+  <div class="overlay-card">
+    <div class="success-icon">✓</div>
+    <h2>Submitted Successfully</h2>
+    <p>✅ Your details have been submitted successfully!</p>
+    <div class="ty-meta" id="tyMeta"></div>
+    <button id="nextBtn" onclick="resetForm()">+ Add New</button>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<!-- Footer gets injected here by common.js -->
+<div id="footerPlaceholder"></div>
+
+<!-- common.js injects header + footer; must load after the placeholder divs above -->
+<script src="common.js"></script>
+<!-- app.js holds all the form/API logic -->
+<script src="app.js"></script>
+</body>
+</html>
