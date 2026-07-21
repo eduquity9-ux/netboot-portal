@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>NMS — Client Logs Monitor</title>
+<title>NMS — Monitor</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
 <style>
@@ -133,7 +133,7 @@
       <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6l8-4z"/></svg>
     </div>
     <h2>NMS Access</h2>
-    <p class="sub">Sign in to view the client logs monitor</p>
+    <p class="sub">Sign in to view the rogue dhcp server monitor</p>
     <div class="auth-field">
       <label>Admin password</label>
       <input type="password" id="nmsAuthPass" placeholder="Enter security access password" />
@@ -146,10 +146,10 @@
 <div id="nmsDashboard" class="dashboard-wrapper">
 
   <div class="console-bar">
-    <div class="console-brand"><span class="dot"></span> NMS — Client Logs Monitor</div>
+    <div class="console-brand"><span class="dot"></span> NMS — rogue dhcp server Monitor</div>
     <div class="console-stats">
       <div class="console-chip">Total <b id="statTotal">0</b></div>
-      <div class="console-chip">Unique centers <b id="statCenters">0</b></div>
+      <div class="console-chip">Total Centers<b id="statCenters">0</b></div>
       <div class="console-chip">Last refresh <b id="statLastRefresh">—</b></div>
       <div class="console-chip">Next auto-refresh <b id="statNextRefresh">5:00</b></div>
     </div>
