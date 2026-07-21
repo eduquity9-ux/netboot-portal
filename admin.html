@@ -77,6 +77,23 @@
   .btn-refresh.spinning svg{ animation:spin .7s linear infinite; }
   @keyframes spin{ to{ transform:rotate(360deg); } }
 
+  /* NMS launch button — visually distinct (teal) from the refresh action */
+  .btn-nms{
+    background:var(--teal);
+    border:1px solid var(--teal);
+    color:#fff;
+    padding:6px 12px;
+    border-radius:7px;
+    font-size:11px;
+    font-weight:700;
+    cursor:pointer;
+    display:flex; align-items:center; gap:5px;
+    text-decoration:none;
+    transition:filter .12s ease;
+  }
+  .btn-nms:hover{ filter:brightness(1.1); }
+  .btn-nms svg{ width:12px; height:12px; }
+
   .console-body{
     flex:1 1 auto;
     min-height:0;
@@ -318,6 +335,10 @@
       <div class="console-chip">Filtered <b id="statFiltered">0</b></div>
     </div>
     <div class="console-actions">
+      <a href="nms.html" target="_blank" rel="noopener" class="btn-nms" title="Open the Client Logs monitor">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+        Open NMS
+      </a>
       <button class="btn-refresh" id="btnRefresh" onclick="loadMasterGrid()">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M23 4v6h-6M1 20v-6h6"/><path d="M3.51 9a9 9 0 0114.36-3.36L23 10M1 14l5.13 4.36A9 9 0 0020.49 15"/></svg>
         Refresh
@@ -421,5 +442,50 @@
 
 <script src="common.js"></script>
 <script src="app.js"></script>
+
+<!--
+  NMS session handoff — no edits to app.js needed.
+  When the admin login succeeds on THIS page, we stash the password the
+  user typed into sessionStorage. nms.html (opened via the "Open NMS"
+  link above, in a new tab) inherits this tab's sessionStorage and uses
+  that flag to skip its own login screen automatically. Typing the
+  nms.html URL directly in a browser with no such session still hits its
+  login gate.
+-->
+<script>
+(function(){
+  const AUTH_STORAGE_KEY = "nbo_admin_auth";
+  const passField = document.getElementById('authAdminPass');
+  const authBtn = document.querySelector('.btn-auth-submit');
+  const dash = document.getElementById('adminDashboardView');
+
+  function isDashboardVisible(){
+    return dash && getComputedStyle(dash).display !== 'none';
+  }
+
+  function persistAuth(password){
+    if (!password) return;
+    try{
+      sessionStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify({ ts: Date.now(), password }));
+    }catch(e){}
+  }
+
+  if (authBtn && passField && dash) {
+    authBtn.addEventListener('click', function(){
+      const attemptedPassword = passField.value;
+      let attempts = 0;
+      const poll = setInterval(function(){
+        attempts++;
+        if (isDashboardVisible()) {
+          persistAuth(attemptedPassword);
+          clearInterval(poll);
+        } else if (attempts > 25) { // ~5s timeout, then give up quietly
+          clearInterval(poll);
+        }
+      }, 200);
+    });
+  }
+})();
+</script>
 </body>
 </html>
