@@ -13,7 +13,6 @@ document.getElementById('headerPlaceholder').innerHTML = `
         <button class="hamburger-menu" id="hamburgerMenu" aria-label="Toggle menu">&#9776;</button>
         <nav class="nav-links" id="navLinks">
           <a href="index.html">Home</a>
-          <a href="how-to.html">Guide</a>
           <a href="admin.html">Login</a>
         </nav>
       </div>
